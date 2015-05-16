@@ -26,3 +26,8 @@ group :development, :test do
   # Read more: https://github.com/rails/spring
   gem 'spring'
 end
+
+group :test do
+  gem 'codeclimate-test-reporter', require: false
+  gem 'pullreview-coverage', require: false
+end
