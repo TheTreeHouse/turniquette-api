@@ -1,6 +1,12 @@
 ENV['RAILS_ENV'] ||= 'test'
+
 require File.expand_path('../../config/environment', __FILE__)
+require 'codeclimate-test-reporter'
+require 'pullreview/coverage_reporter'
 require 'rails/test_help'
+
+CodeClimate::TestReporter.start
+PullReview::CoverageReporter.start
 
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
