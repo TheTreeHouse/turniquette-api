@@ -15,4 +15,7 @@
 /log/*
 !/log/.keep
 /tmp
+
+# Ignore AZK
 .azk
+.mongodb
