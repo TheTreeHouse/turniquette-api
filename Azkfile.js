@@ -6,7 +6,7 @@
 systems({
   turniquette: {
     // Dependent systems
-    depends: [],
+    depends: ['mongodb'],
     // More images:  http://images.azk.io
     image: {"dockerfile": "."},
     // Steps to execute before running instances
@@ -29,6 +29,27 @@ systems({
       // set instances variables
       RUBY_ENV: "development",
       BUNDLE_APP_CONFIG: ".bundle",
+    },
+  },
+  mongodb: {
+    image : { docker: "azukiapp/mongodb" },
+    scalable: false,
+    wait: {"retry": 20, "timeout": 1000},
+    // Mounts folders to assigned paths
+    mounts: {
+      // equivalent persistent_folders
+      '/data/db': path('.mongodb'),
+    },
+    ports: {
+      http: "28017:28017/tcp",
+    },
+    http: {
+      // mongodb.azk.dev
+      domains: [ "#{system.name}.#{azk.default_domain}" ],
+    },
+    export_envs: {
+      MONGODB_URI: "mongodb://#{net.host}:#{net.port[27017]}/#{manifest.dir}",
+      MONGODB_SOCKET: "#{net.host}:#{net.port[27017]}",
     },
   },
 });
