@@ -19,3 +19,6 @@
 # Ignore AZK
 .azk
 .mongodb
+
+# Ignore coverage report.
+/coverage
