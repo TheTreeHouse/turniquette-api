@@ -7,8 +7,6 @@ script:
   - bundle exec rake test
 services:
   - mongodb
-env:
-  - MONGODB_SOCKET=localhost:27017
 before_script:
   - sleep 15
   - mongo mydb_test --eval 'db.addUser("travis", "test");'
