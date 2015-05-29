@@ -16,10 +16,14 @@ class RegistrationServiceTest < ActiveSupport::TestCase
   end
 
   test 'with NOT valid invitation token, do nothing' do
-    assert_equal RegistrationService.new.from_invitation(@invitation.email, 'faked-token', @user_data), nil
+    assert_raise RegistrationService::InvalidInvitationError do
+      RegistrationService.new.from_invitation(@invitation.email, 'faked-token', @user_data)
+    end
   end
 
   test 'with NOT valid invitation, do nothing' do
-    assert_equal RegistrationService.new.from_invitation('fake@example.com', 'faked-token', @user_data), nil
+    assert_raise RegistrationService::InvalidInvitationError do
+      RegistrationService.new.from_invitation('fake@example.com', 'faked-token', @user_data)
+    end
   end
 end
