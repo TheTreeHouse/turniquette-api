@@ -1,4 +1,8 @@
 ---
+languages:
+  - ruby
+excludes:
+  - Azkfile.js
 notifications:
   pullrequest:
     comment: verbose
