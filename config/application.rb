@@ -22,7 +22,7 @@ module Turniquette
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
-    Mongoid.logger.level = Logger::DEBUG
-    Moped.logger.level = Logger::DEBUG
+    Mongoid.logger.level = Logger::WARN
+    Moped.logger.level = Logger::WARN
   end
 end
