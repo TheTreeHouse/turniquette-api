@@ -5,6 +5,11 @@ class RegistrataionServiceTest < ActiveSupport::TestCase
     @invitation = Invitation.create(email: 'johndoe@example.com')
   end
 
+  def teardown
+    Invitation.delete_all
+    User.delete_all
+  end
+
   test 'with valid invitation, creates a user' do
     user_data = { email: @invitation.email, password: 'my-password' }
     assert_equal RegistrationService.new.from_invitation(@invitation.email, @invitation.token, user_data).class, User

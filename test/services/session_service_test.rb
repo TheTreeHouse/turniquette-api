@@ -5,6 +5,10 @@ class SessionServiceTest < ActiveSupport::TestCase
     @user = User.create(email: 'johndoe@example.com', password: 'secret')
   end
 
+  def teardown
+    User.delete_all
+  end
+
   test 'email not exist returns nil' do
     session = SessionService.new.authenticate('wrong-email@example.com', 'secret')
     assert_nil session

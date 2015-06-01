@@ -6,6 +6,11 @@ class Api::RegistrationsControllerTest < ActionController::TestCase
     @user_data = { email: @invitation.email, password: 'my-password' }
   end
 
+  def teardown
+    Invitation.delete_all
+    User.delete_all
+  end
+
   test 'create from invitation success' do
     assert_difference 'User.count' do
       get :create, email: @invitation.email, token: @invitation.token, user_data: @user_data
