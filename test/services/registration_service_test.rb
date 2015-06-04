@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RegistrataionServiceTest < ActiveSupport::TestCase
+class RegistrationServiceTest < ActiveSupport::TestCase
   def setup
     @invitation = Invitation.create(email: 'johndoe@example.com')
     @user_data = { email: @invitation.email, password: 'my-password' }
