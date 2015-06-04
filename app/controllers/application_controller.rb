@@ -8,7 +8,7 @@ class ApplicationController < ActionController::Base
   private
 
   def authenticate
-    SessionService.new.authenticate_token(params[:email], params[:auth_token])
+    @current_user ||= SessionService.new.authenticate_token(params[:email], params[:auth_token])
   rescue SessionService::AuthenticationError
     return render 'shared/401', status: :unauthorized
   end
