@@ -16,14 +16,14 @@ class V1::RegistrationsControllerTest < ActionController::TestCase
       get :create, email: @invitation.email, token: @invitation.token, user_data: @user_data
     end
     assert_response :success
-    assert_equal response.body, '{"registration":{"success":true,"email":"johndoe@example.com"}}'
+    assert_equal response.body, '{"success":true,"email":"johndoe@example.com"}'
   end
 
   test 'create from invitation fail' do
     assert_no_difference 'User.count' do
       get :create, email: @invitation.email, token: 'faked-token', user_data: @user_data
     end
-    assert_response :success
-    assert_equal response.body, '{"registration":{"success":false}}'
+    assert_response :not_found
+    assert_equal response.body, '{"success":false,"message":"Not found"}'
   end
 end
