@@ -5,5 +5,6 @@ Rails.application.routes.draw do
     get 'logout' => 'sessions#destroy'
 
     resources :events, except: [:edit, :new]
+    resources :invitations, only: [:create]
   end
 end
