@@ -1,11 +1,13 @@
 class User
   include Mongoid::Document
-  before_save :encrypt_password
 
   field :email, type: String
   field :encrypted_password, type: String
   field :auth_token, type: String
   attr_accessor :password
+  has_many :events, dependent: :nullify
+
+  before_save :encrypt_password
 
   def generate_auth_token
     self.auth_token = loop do
