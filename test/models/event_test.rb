@@ -15,4 +15,15 @@ class EventTest < ActiveSupport::TestCase
     @user.destroy
     assert_nil @event.owner
   end
+
+  test 'allows repeated event names for different owners' do
+    owner = User.new(email: 'homero@simpsons.com')
+    event_duplicated = Event.new(name: "Moe's bar", owner: owner, date: Time.zone.now)
+    assert event_duplicated.valid?
+  end
+
+  test 'does not allow repeated event names for same owner' do
+    event_duplicated = Event.new(name: "Moe's bar", owner: @user, date: Time.zone.now)
+    assert_not event_duplicated.valid?
+  end
 end
