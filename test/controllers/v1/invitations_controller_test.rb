@@ -3,7 +3,7 @@ require 'test_helper'
 class V1::InvitationsControllerTest < ActionController::TestCase
   def setup
     @user = User.create(email: 'johndoe@example.com', password: 'secret', auth_token: 'secret-token')
-    @event = Event.create(owner: @user)
+    @event = Event.create(name: "Moe's bar", date: Time.zone.now, owner: @user)
     @auth_params = { email: @user.email, auth_token: @user.auth_token }
   end
 

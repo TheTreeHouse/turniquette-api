@@ -2,7 +2,8 @@ require 'test_helper'
 
 class InvitationTest < ActiveSupport::TestCase
   def setup
-    @event = Event.create(name: "Moe's bar", date: Time.zone.now)
+    @user = User.create(email: 'homer@simpsons.com')
+    @event = Event.create(name: "Moe's bar", date: Time.zone.now, owner: @user)
   end
 
   def teardown
