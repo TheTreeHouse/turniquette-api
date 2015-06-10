@@ -9,13 +9,20 @@ class V1::EventsController < ApplicationController
   end
 
   def create
-    @event = Event.create(event_params)
-    render json: @event
+    @event = Event.new(event_params)
+    if @event.save
+      render json: @event
+    else
+      render 'validation_error', status: :forbidden
+    end
   end
 
   def update
-    @event.update(event_params)
-    render json: @event
+    if @event.update_attributes(event_params)
+      render json: @event
+    else
+      render 'validation_error', status: :forbidden
+    end
   end
 
   def destroy
@@ -32,6 +39,6 @@ class V1::EventsController < ApplicationController
   end
 
   def event_params
-    params.permit(:name, :date, :periodicity)
+    params.permit(:name, :date, :periodicity, :owner)
   end
 end
