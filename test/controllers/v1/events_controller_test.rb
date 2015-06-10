@@ -4,7 +4,7 @@ class V1::EventsControllerTest < ActionController::TestCase
   def setup
     @logged_user = User.create(email: 'homer@simpsons.com', password: 'any-key', auth_token: 'stupid-flanders')
     @logged_event = Event.create(name: "Moe's bar", date: Time.zone.now, owner: @logged_user)
-    @other_event = Event.create(name: 'Treehouse', date: Time.zone.now, owner: User.new)
+    @other_event = Event.create(name: 'Treehouse', date: Time.zone.now, owner: User.new(email: 'user@email.com'))
     @auth_params = { email: @logged_user.email, auth_token: @logged_user.auth_token }
   end
 
