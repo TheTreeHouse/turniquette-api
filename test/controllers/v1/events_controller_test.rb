@@ -60,4 +60,19 @@ class V1::EventsControllerTest < ActionController::TestCase
     end
     assert_response :not_found
   end
+
+  test "alert when trying to create an invalid event" do
+    missing_name = { date: Time.zone.now, owner: @logged_user }
+    assert_no_difference 'Event.count' do
+      get :create, missing_name.merge!(@auth_params)
+    end
+    assert_response :forbidden
+    assert_equal response.body, %Q({"success":false,"message":["Name can't be blank"]})
+  end
+
+  test "alerte when trying to update an event with invalid data" do
+    patch :update, { id: @logged_event, name: '' }.merge!(@auth_params)
+    assert_response :forbidden
+    assert_equal response.body, %Q({"success":false,"message":["Name can't be blank"]})
+  end
 end
