@@ -5,6 +5,9 @@ class Invitation
   field :token, type: String
   belongs_to :event
 
+  validates_presence_of :email
+  validates_uniqueness_of :email, scope: :event
+
   before_create :set_token
   after_create :send_mail
 
