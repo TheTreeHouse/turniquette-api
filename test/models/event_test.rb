@@ -25,7 +25,7 @@ class EventTest < ActiveSupport::TestCase
   test 'does not allow repeated event names for same owner' do
     event_duplicated = Event.new(name: "Moe's bar", owner: @user, date: Time.zone.now)
     assert_not event_duplicated.valid?
-    assert_equal ["is already taken"], event_duplicated.errors[:name]
+    assert_equal ['is already taken'], event_duplicated.errors[:name]
   end
 
   test 'requires name' do

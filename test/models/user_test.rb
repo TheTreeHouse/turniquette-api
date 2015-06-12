@@ -15,6 +15,6 @@ class UserTest < ActiveSupport::TestCase
     user = User.create(email: 'homer@simpsons.com')
     user_duplicated = User.new(email: 'homer@simpsons.com')
     assert_not user_duplicated.valid?
-    assert_equal ["is already taken"], user_duplicated.errors[:email]
+    assert_equal ['is already taken'], user_duplicated.errors[:email]
   end
 end

@@ -43,6 +43,6 @@ class InvitationTest < ActiveSupport::TestCase
     new_invitation = Invitation.new(event: @event, email: 'invited@email.com')
 
     assert_not new_invitation.valid?
-    assert_equal ["is already taken"], new_invitation.errors[:email]
+    assert_equal ['is already taken'], new_invitation.errors[:email]
   end
 end
