@@ -12,7 +12,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'does not allow more than one user with same email' do
-    user = User.create(email: 'homer@simpsons.com')
+    User.create(email: 'homer@simpsons.com')
     user_duplicated = User.new(email: 'homer@simpsons.com')
     assert_not user_duplicated.valid?
     assert_equal ['is already taken'], user_duplicated.errors[:email]

@@ -31,7 +31,7 @@ class InvitationTest < ActiveSupport::TestCase
   end
 
   test 'allows invitations sharing email for different events' do
-    invitation = Invitation.create(event: @event, email: 'invited@email.com')
+    Invitation.create(event: @event, email: 'invited@email.com')
     alt_event = Event.new(name: 'Different event', owner: @user, date: Time.zone.now)
     new_invitation = Invitation.new(event: alt_event, email: 'invited@email.com')
 
@@ -39,7 +39,7 @@ class InvitationTest < ActiveSupport::TestCase
   end
 
   test 'does not allow invitation sharing email for same event' do
-    invitation = Invitation.create(event: @event, email: 'invited@email.com')
+    Invitation.create(event: @event, email: 'invited@email.com')
     new_invitation = Invitation.new(event: @event, email: 'invited@email.com')
 
     assert_not new_invitation.valid?
