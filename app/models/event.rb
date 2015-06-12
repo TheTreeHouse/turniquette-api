@@ -7,7 +7,7 @@ class Event
   belongs_to :owner, class_name: 'User'
   has_many :invitations, dependent: :destroy
 
-  validates_presence_of :name, :date
-  validates_presence_of :owner, on: :create
-  validates_uniqueness_of :name, scope: :owner
+  validates :name, :date, presence: true
+  validates :owner, presence: true, on: :create
+  validates :name, uniqueness: { scope: :owner }
 end
