@@ -9,20 +9,13 @@ class V1::EventsController < ApplicationController
   end
 
   def create
-    @event = Event.new(event_params)
-    if @event.save
-      render json: @event
-    else
-      render 'validation_error', status: :forbidden
-    end
+    @event = Event.create!(event_params)
+    render json: @event
   end
 
   def update
-    if @event.update_attributes(event_params)
-      render json: @event
-    else
-      render 'validation_error', status: :forbidden
-    end
+    @event.update_attributes!(event_params)
+    render json: @event
   end
 
   def destroy
