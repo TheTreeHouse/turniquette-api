@@ -7,6 +7,8 @@ class User
   attr_accessor :password
   has_many :events, dependent: :nullify
 
+  validates :email, presence: true, uniqueness: true
+
   before_save :encrypt_password
 
   def generate_auth_token

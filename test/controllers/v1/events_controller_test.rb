@@ -4,7 +4,7 @@ class V1::EventsControllerTest < ActionController::TestCase
   def setup
     @logged_user = User.create(email: 'homer@simpsons.com', password: 'any-key', auth_token: 'stupid-flanders')
     @logged_event = Event.create(name: "Moe's bar", date: Time.zone.now, owner: @logged_user)
-    @other_event = Event.create(name: 'Treehouse', date: Time.zone.now, owner: nil)
+    @other_event = Event.create(name: 'Treehouse', date: Time.zone.now, owner: User.new(email: 'user@email.com'))
     @auth_params = { email: @logged_user.email, auth_token: @logged_user.auth_token }
   end
 
@@ -32,7 +32,7 @@ class V1::EventsControllerTest < ActionController::TestCase
 
   test 'create new event' do
     assert_difference 'Event.count' do
-      get :create, { name: 'event', date: Time.zone.now }.merge!(@auth_params)
+      get :create, { name: 'event', date: Time.zone.now, owner: @logged_user }.merge!(@auth_params)
     end
     assert_response :success
   end
@@ -59,5 +59,20 @@ class V1::EventsControllerTest < ActionController::TestCase
       delete :destroy, { id: @other_event }.merge!(@auth_params)
     end
     assert_response :not_found
+  end
+
+  test 'alert when trying to create an invalid event' do
+    missing_name = { date: Time.zone.now, owner: @logged_user }
+    assert_no_difference 'Event.count' do
+      get :create, missing_name.merge!(@auth_params)
+    end
+    assert_response :forbidden
+    assert_equal response.body, %q({"success":false,"message":["Name can't be blank"]})
+  end
+
+  test 'alert when trying to update an event with invalid data' do
+    patch :update, { id: @logged_event, name: '' }.merge!(@auth_params)
+    assert_response :forbidden
+    assert_equal response.body, %q({"success":false,"message":["Name can't be blank"]})
   end
 end
