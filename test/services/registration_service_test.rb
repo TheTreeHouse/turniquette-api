@@ -14,7 +14,20 @@ class RegistrationServiceTest < ActiveSupport::TestCase
   end
 
   test 'with valid invitation, creates a user' do
-    assert_equal RegistrationService.new.from_invitation(@invitation.email, @invitation.token, @user_data).class, User
+    assert_instance_of User, RegistrationService.new.from_invitation(@invitation.email, @invitation.token, @user_data)
+  end
+
+  test 'with valid invitation & existing user, does not create a new user' do
+    User.create(@user_data)
+    assert_no_difference 'User.count' do
+      RegistrationService.new.from_invitation(@invitation.email, @invitation.token, @user_data)
+    end
+  end
+
+  test 'with valid invitation, removes invitation' do
+    assert_difference 'Invitation.count', -1 do
+      RegistrationService.new.from_invitation(@invitation.email, @invitation.token, @user_data)
+    end
   end
 
   test 'with NOT valid invitation token, do nothing' do
