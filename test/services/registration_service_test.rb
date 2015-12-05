@@ -1,17 +1,7 @@
 require 'test_helper'
 
 class RegistrationServiceTest < ActiveSupport::TestCase
-  def setup
-    @event = Event.create(name: "Moe's bar", date: Time.zone.now)
-    @invitation = Invitation.create(event: @event, email: 'johndoe@example.com')
-    @user_data = { email: @invitation.email, password: 'my-password' }
-  end
-
-  def teardown
-    Event.delete_all
-    Invitation.delete_all
-    User.delete_all
-  end
+  include RegistrationSetup
 
   test 'with valid invitation, creates a user' do
     assert_instance_of User, RegistrationService.new.from_invitation(@invitation.email, @invitation.token, @user_data)
